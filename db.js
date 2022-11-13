@@ -1,3 +1,4 @@
+// --- * --- Connect DATABASE --- * ---
 async function connect(){
     if(global.connection && global.connection.state !== 'disconnected')
         return global.connection;
@@ -11,3 +12,10 @@ async function connect(){
 connect();
 
 module.exports = {};
+
+// --- * --- SELECT  DATABASE --- * ---
+async function selectCustomers() {
+    const conn = await connect();
+    const [rows] = await conn.query('SELECT * FROM users');
+    return rows;
+};
