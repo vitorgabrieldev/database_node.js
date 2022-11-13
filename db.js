@@ -19,3 +19,15 @@ async function selectCustomers() {
     const [rows] = await conn.query('SELECT * FROM users');
     return rows;
 };
+
+module.exports = {selectCustomers};
+
+// --- * --- Insert  DATABASE --- * ---
+async function insertCustomer(customer){
+    const conn = await connect();
+    const sql = 'INSERT INTO users(nome,idade) VALUES (?,?);';
+    const values = [customer.nome, customer.idade];
+    return await conn.query(sql, values);
+};
+
+module.exports = {insertCustomer};
