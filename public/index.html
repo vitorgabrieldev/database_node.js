@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"></script>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app.css">
 
 </head>
 <body>
@@ -25,21 +25,24 @@
     <script type="text/javascript">
         var socket = io('http://localhost:4000');
 
+        // ========== Render Message ==========
         function renderMessages(message) {
           $('.messages').append('<div class="message"><strong>' + message.author + '</strong>:' + message.message + '</div>')  
         };
 
         socket.on('previousMessages', function(message)
         {
-            for(message of message)
+            for(element of message)
             {
-                renderMessages(message);
+                renderMessages(element);
             };
         });
 
         socket.on('receivedMessage', function(message) {
             renderMessages(message);
         });
+
+        // ========================================
 
         $('#chat').submit(function(event) {
             event.preventDefault();
@@ -54,13 +57,10 @@
                     message: message,
                 };
 
+                // --- * ---  Render Message display --- * --- 
                 renderMessages(messageObject);
 
-                socket.emit('sendMessage', messageObject);
-
-                // var author = $('input[name=username]') = "";
-                // var message = $('input[name=message]') = "";
-                
+                socket.emit("sendMessage", messageObject);
             };
         });
     </script>

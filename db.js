@@ -13,21 +13,12 @@ connect();
 
 module.exports = {};
 
-// --- * --- SELECT  DATABASE --- * ---
-async function selectCustomers() {
-    const conn = await connect();
-    const [rows] = await conn.query('SELECT * FROM messages');
-    return rows;
-};
-
-module.exports = {selectCustomers};
-
 // --- * --- Insert  DATABASE --- * ---
-async function insertCustomer(customer){
+async function insertCustomer(data){
     const conn = await connect();
-    const sql = 'INSERT INTO users(author,message) VALUES (?,?);';
-    const values = [customer.author, customer.message];
+    const sql = 'INSERT INTO settings(nome,mensagem) VALUES (?,?);';
+    const values = [data.nome, data.message];
     return await conn.query(sql, values);
 };
-
 module.exports = {insertCustomer};
+
